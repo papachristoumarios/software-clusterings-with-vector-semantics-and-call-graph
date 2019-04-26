@@ -1,4 +1,4 @@
-# FSE 2019 Submission - Software Clusterings with Vector Semantics and the Call Graph
+# Software Clusterings with Vector Semantics and the Call Graph
 
 This repository holds the manuscript and the experimental results of FSE 2019 Submission to the ACM Undergraduate Research Competition
 under the name "Sofware Clusterings with Vector Semantics and the Call Graph"
