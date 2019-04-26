@@ -172,16 +172,17 @@ compare it with other state-of-the-art and baseline clustering algorithms \cite{
     \toprule
     Algorithm & Number of Clusters & Cluster Size Range & Avg. Cluster & Standard Deviation & Median Cluster & MoJo Distance \\
     \midrule
-    ACDC \cite{acdc} & 9055 & 1 -- 4245 & 4.53 & 45.82 & 2 & 33694\\
-    Average Linkage \cite{average} & 21 & 1--3406 & 163 & 725.11 & 1 & 2092 \\
-    Complete Linkage \cite{complete} & 21 & 1--1529 & 163 & 412.34 & 19.0 & 1710 \\
-    Ward Linkage \cite{ward} & 21 & 21--948 & 163 & 223 & 70.0 & 1138 \\
+    ACDC \cite{acdc} & 9055 & 1 -- 4245 & 5 & 46 & 2 & 33694\\
+    Average Linkage \cite{average} & 21 & 1--3406 & 163 & 725 & 1 & 2092 \\
+    Complete Linkage \cite{complete} & 21 & 1--1529 & 163 & 412 & 19.0 & 1710 \\
+    LIMBO \cite{limbo} & 21 & 50--1810 & 163 & 375 & 50  & 1482 \\
+
+    Ward Linkage \cite{ward} & 21 & 21--948 & 163 & 223 & 70 & 1138 \\
         
-    LIMBO \cite{limbo} & 21 & & \\
     SADE & 10 (\pm 2)  & 2 (\pm 0) -132 (\pm 13) & 64 (\pm 4) & 40 (\pm 4) & 65 (\pm 10) & 243 (\pm 1)  \\
     SADE (Directed) & 5 (\pm 2) & 1 (\pm 1) - 614 (\pm 1) & 141 (\pm 39) & 253 (\pm 25) & 2 (\pm 0.3)  & 237 (\pm 2) \\
-    
-    Ground Truth & 21 & 1--1348 & 163 & 340.62 & 11.0 & -- \\
+    \midrule
+    Ground Truth & 21 & 1--1348 & 163 & 341 & 11.0 & -- \\
     \bottomrule
   \end{tabular}
 \end{table*}
@@ -223,7 +224,7 @@ Finally, it was also used in related studies \cite{acdc, evaluation} as a refere
 
 \paragraph{Experimental Setting} Our method was run on Linux 4.21,
 consisting of 20.3 million SLOC against Average-Linkage \cite{average}, Complete-Linkage \cite{complete} 
-and Ward-Linkage \cite{ward} as well as ACDC and LIMBO ($B = 10, S = \infty$). The results are presented in Table \ref{tab:evaluation}. 
+and Ward-Linkage \cite{ward} as well as ACDC and LIMBO with $B = 100$, $S = \infty$ and Bag-of-Words features. The results are presented in Table \ref{tab:evaluation}. 
 As ground truth we have used the first level directories as a target clustering and as input we have considered 
 the modules of the one-top directories. 
 For example, the source code file \texttt{drivers/net/ieee802154\-/mcr20a.c} has a ground truth value of \texttt{drivers} 
