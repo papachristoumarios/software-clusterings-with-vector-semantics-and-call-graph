@@ -157,27 +157,29 @@ compare it with other state-of-the-art and baseline clustering algorithms  in te
 
 \section{Method} 
 
+
 \begin{table*}
   \caption{Experimental Results for Linux 4.21}
     \label{tab:evaluation}
-    \begin{tabular}{lrrrrrr}
+    \begin{tabular}{lrrrrrrr}
     \toprule
-    Algorithm & \# Clusters & Size Range & $\bar x$ & $\sigma$ & Median & MoJo Distance \\
+    Algorithm & Feature Dimension & \# Clusters & Size Range & $\bar x$ & $\sigma$ & Median & MoJo Distance \\
     \midrule
-    \textsc{acdc} \cite{acdc} & 9055 & 1 -- 4245 & 5 & 46 & 2 & 33694\\
-    Average Linkage \cite{average} & \emph{21} & 1--3406 & 163 & 725 & 1 & 2092 \\
-    Complete Linkage \cite{complete} & \emph{21} & 1--1529 & 163 & 412 & 19 & 1710 \\
-    \textsc{limbo} \cite{limbo} & \emph{21} & 50--1810 & 163 & 375 & 50  & 1482 \\
+    \textsc{acdc} \cite{acdc} & -- & 9055 & 1 -- 4245 & 5 & 46 & 2 & 33694\\
+    Average Linkage \cite{average} & \emph{300} & \emph{21} & 1--3406 & 163 & 725 & 1 & 2092 \\
+    Complete Linkage \cite{complete} & \emph{300} & \emph{21} & 1--1529 & 163 & 412 & 19 & 1710 \\
+    \textsc{limbo} \cite{limbo} & 12317 &\emph{21} & 50--1810 & 163 & 375 & 50  & 1482 \\
 
-    Ward Linkage \cite{ward} & \emph{21} & 21--948 & 163 & 223 & 70 & 1138 \\
+    Ward Linkage \cite{ward} & \emph{300} & \emph{21} & 21--948 & 163 & 223 & 70 & 1138 \\
         
-    \textsc{sade} & 10 (\pm 2)  & 2 (\pm 0) -132 (\pm 13) & 64 (\pm 4) & 40 (\pm 4) & 65 (\pm 10) & 243 (\pm 1)  \\
-    \textsc{sade} (Directed) & 5 (\pm 2) & 1 (\pm 1) - 614 (\pm 1) & 141 (\pm 39) & 253 (\pm 25) & 2 (\pm 0.3)  & 237 (\pm 2) \\
+    \textsc{sade} & \emph{300} & 10 (\pm 2)  & 2 (\pm 0) -132 (\pm 13) & 64 (\pm 4) & 40 (\pm 4) & 65 (\pm 10) & 243 (\pm 1)  \\
+    \textsc{sade} (Directed) & \emph{300} & 5 (\pm 2) & 1 (\pm 1) - 614 (\pm 1) & 141 (\pm 39) & 253 (\pm 25) & 2 (\pm 0.3)  & 237 (\pm 2) \\
     \midrule
-    Ground Truth & 21 & 1--1348 & 163 & 341 & 11.0 & -- \\
+    Ground Truth & -- & 21 & 1--1348 & 163 & 341 & 11.0 & -- \\
     \bottomrule
   \end{tabular}
 \end{table*}
+
 
 \paragraph{Embeddings} 
 
