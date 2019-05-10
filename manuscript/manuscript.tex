@@ -77,18 +77,18 @@ the Call Graph}
 
 \begin{abstract}
 
-\noindent \textbf{Purpose -- } Propose a method to determine a software's modules without 
+\noindent \textbf{Purpose -- } Propose a novel method to determine a software's modules without 
 knowledge of its architectural structure, and empirically validate the method's performance.
 
 \noindent \textbf{Method -- } Cluster files by combining document embeddings, generated with the  \emph{Doc2Vec} algorithm, and the \emph{call graph}, provided by Static Graph Analyzers to an augmented graph.
-Use of the \emph{Louvain Algorithm} to iteratively exhibit its community structure and propose a module--level clustering. 
+Use of the \emph{Louvain Algorithm} to determine its community structure and propose a module--level clustering. 
 
 
 \noindent \textbf{Results --} Our method performs better in terms of stability, authoritativeness 
 and extremity over other state-of-the-art clustering methods proposed in literature and is able to decently 
 recover the ground truth clustering of the Linux Kernel. 
 
-\noindent \textbf{Conclusions --} Semantic information from vector semantics as well as the call graph can produce 
+\noindent \textbf{Conclusions and Contributions --} Semantic information from vector semantics as well as the call graph can produce 
 accurate results for software clusterings of large systems.
 
 \end{abstract}
@@ -133,50 +133,46 @@ accurate results for software clusterings of large systems.
 
 
 
-%Modern software systems usually span hundreds of thousands of source code lines (SLOC) 
+%Modern software systems usually span hundreds of thousands of source code lines (\textsc{sloc}) 
 %since the inherent complexity of modern applications that computers have to solve has 
 %exponentially increased. 
 
 In modern software systems, the need for adoption of modular software architectural schemata 
-becomes inevitable for robust maintainability of the overall software system.
-Since the architecture of a software system is the most fundamental realization of a 
+becomes inevitable for robust maintainability of their codebases.
+Since the architecture of a software system is the most fundamental realization of the 
 software system, when there is no description of the architecture of it, software 
-architects usually make attempts to recover it. In the past, there have been attempts to 
+architects make attempts to recover it. In the past, methods have been proposed 
 identify the main components of a software system using hierarchical clustering 
 algorithms \cite{maqbool_overview, limbo} mainly by clustering modules into subsystems, given 
-its source code.    
-The possibilities offered by machine learning techniques and practices in the Natural Language Processing (NLP) 
+using the source code.    
+Recently, the possibilities offered by machine learning techniques and practices in the Natural Language Processing (\textsc{nlp}) 
 can also be applied on codebases as corpora of text, thus enabling 
-the extraction of useful information for the semantics of the source codebase 
-inaugurating new modes of reviewing large amounts of source code.
-An example is demonstrated through the Deep Code Search Project \cite{deepcodesearch} .
+the extraction of useful information for the semantics of the source code 
+inaugurating new modes of reviewing the codebase. 
 
-This paper aims to propose software clusterings using a combination of vector semantics on the source code provided 
-by \emph{Doc2Vec} as well as the existing structure of 
-the codebase via the call graph in order to form communities and arrive at a module-level 
-architecture viewed from the call graph perspective. 
-We will study the Linux codebase and we will compare it with ground truth in using the MoJo measure \cite{mojo} as well as 
+Our motivation, through this paper, is to use new features, vector semantics and structural information via the call graph in order to perform community detection and arrive at module-level clusterings. 
+We will study the Linux codebase and we will compare it with ground truth  using the MoJo measure \cite{mojo} as well as 
 compare it with other state-of-the-art and baseline clustering algorithms  in terms of \emph{stability}, \emph{authoritativeness} and \emph{extremity}
 \cite{maqbool_overview, evaluation}.
 
 \section{Method} 
 
 \begin{table*}
-  \caption{Experimental Results for Linux 4.21 Codebase}
+  \caption{Experimental Results for Linux 4.21}
     \label{tab:evaluation}
     \begin{tabular}{lrrrrrr}
     \toprule
-    Algorithm & Number of Clusters & Cluster Size Range & Avg. Cluster & Standard Deviation & Median Cluster & MoJo Distance \\
+    Algorithm & \# Clusters & Size Range & $\bar x$ & $\sigma$ & Median & MoJo Distance \\
     \midrule
-    ACDC \cite{acdc} & 9055 & 1 -- 4245 & 5 & 46 & 2 & 33694\\
-    Average Linkage \cite{average} & 21 & 1--3406 & 163 & 725 & 1 & 2092 \\
-    Complete Linkage \cite{complete} & 21 & 1--1529 & 163 & 412 & 19.0 & 1710 \\
-    LIMBO \cite{limbo} & 21 & 50--1810 & 163 & 375 & 50  & 1482 \\
+    \textsc{acdc} \cite{acdc} & 9055 & 1 -- 4245 & 5 & 46 & 2 & 33694\\
+    Average Linkage \cite{average} & \emph{21} & 1--3406 & 163 & 725 & 1 & 2092 \\
+    Complete Linkage \cite{complete} & \emph{21} & 1--1529 & 163 & 412 & 19 & 1710 \\
+    \textsc{limbo} \cite{limbo} & \emph{21} & 50--1810 & 163 & 375 & 50  & 1482 \\
 
-    Ward Linkage \cite{ward} & 21 & 21--948 & 163 & 223 & 70 & 1138 \\
+    Ward Linkage \cite{ward} & \emph{21} & 21--948 & 163 & 223 & 70 & 1138 \\
         
-    SADE & 10 (\pm 2)  & 2 (\pm 0) -132 (\pm 13) & 64 (\pm 4) & 40 (\pm 4) & 65 (\pm 10) & 243 (\pm 1)  \\
-    SADE (Directed) & 5 (\pm 2) & 1 (\pm 1) - 614 (\pm 1) & 141 (\pm 39) & 253 (\pm 25) & 2 (\pm 0.3)  & 237 (\pm 2) \\
+    \textsc{sade} & 10 (\pm 2)  & 2 (\pm 0) -132 (\pm 13) & 64 (\pm 4) & 40 (\pm 4) & 65 (\pm 10) & 243 (\pm 1)  \\
+    \textsc{sade} (Directed) & 5 (\pm 2) & 1 (\pm 1) - 614 (\pm 1) & 141 (\pm 39) & 253 (\pm 25) & 2 (\pm 0.3)  & 237 (\pm 2) \\
     \midrule
     Ground Truth & 21 & 1--1348 & 163 & 341 & 11.0 & -- \\
     \bottomrule
@@ -185,7 +181,7 @@ compare it with other state-of-the-art and baseline clustering algorithms  in te
 
 \paragraph{Embeddings} 
 
-For the prepossessing stage use the NLP package spaCy \cite{spacy} which provided us with very useful tools for the extraction. 
+For the prepossessing stage we use the \textsc{nlp} package spaCy \cite{spacy} which provided us with very useful tools for preprocessing. 
 After prepossessing, we use Gensim \cite{gensim} to train the Doc2Vec model. 
 First of all, we tokenize the code and remove the stop-words. 
 After that, for each token, we split it into its constituent parts using dynamic programming \cite{wordninja} and lemmatize 
@@ -202,81 +198,82 @@ Modules can be user defined or automatically generated by their respective direc
 
 \paragraph{Combining semantics and the Call Graph} 
 The input to the clustering procedure
-is the call graph with cosine similarities of the various modules as weights, thus forming a
-weighted directed graph. Then we run the Louvain Clustering Algorithm \cite{louvain} in
+is the call graph with cosine similarities of the modules as edge weights.
+Then we run the Louvain Clustering Algorithm \cite{louvain} in
 order to obtain the software clustering via maximizing the modularity function with a greedy approach. 
-In case we want to use edge directionality we do a bipartite transformation, detect communities and
-merge the results with a disjoint-set data structure.
+In case we want to consider edge directionality, we do a bipartite transformation, detect communities and
+merge the results with a disjoint-set data structure as stated in reference \cite{malliaros}.
     
 
 \paragraph{Implementation}  
-Our method is implemented in the Python Language using spaCy\cite{spacy}, Gensim \cite{gensim} and NetworkX \cite{nx}.
+Our method is implemented in the Python Language using spaCy\cite{spacy}, Gensim \cite{gensim} and NetworkX \cite{nx} and is named \textsc{sade}. The source code and data are available in \cite{source_code} and \cite{call_graph}. 
 
 \paragraph{Decision Rationale for Evaluation System} 
 We have chosen to use Linux as a codebase to evaluate our method on 
-since it is a large and complex system with 27 years of continuous development and spanning 20.3 millions source lines of code (SLOC) at the time of writing.  
+since it is a large and complex system with 27 years of continuous development and spanning 20.3 millions source lines of code (\textsc{sloc}) at the time of writing.  
 Moreover, it is easy to find ground truth system due to its clear directory structure and construct test-cases for
 evaluations. 
-Finally, it was also used in related studies \cite{acdc, evaluation} as a reference system for evaluation. 
+Finally, it was also used in related studies \cite{acdc, evaluation} as a reference system for evaluation.  
 
-\paragraph{Experimental Setting} Our method was run on Linux 4.21,
-consisting of 20.3 million SLOC against Average-Linkage \cite{average}, Complete-Linkage \cite{complete} 
+\paragraph{Experimental Setting} Our method was tested on Linux 4.21,
+consisting of 20.3 million \textsc{sloc} against Average-Linkage \cite{average}, Complete-Linkage \cite{complete} 
 and Ward-Linkage \cite{ward} using the same document embeddings
-as well as ACDC with structural information \cite{acdc} and LIMBO \cite{limbo} with $B = 100$, $S = \infty$ and Bag-of-Words features. The results are presented in Table \ref{tab:evaluation}. 
-As ground truth we have used the first level directories as a target clustering and as input we have considered 
+as well as \textsc{acdc} with structural information \cite{acdc} and \textsc{limbo} \cite{limbo} with $B = 100$, $S = \infty$ and Bag-of-Words features. The results are presented in Table \ref{tab:evaluation} and user-defined parameters are formatted in italics. 
+As ground truth, we have used the first level directories as a target clustering and as input we have considered 
 the modules of the one-top directories. 
 For example, the source code file \texttt{drivers/net/ieee802154\-/mcr20a.c} has a ground truth value of \texttt{drivers} 
 and it is considered under the same module as every \texttt{.c} and \texttt{.h} file under \texttt{drivers/net/ieee802154}. 
-As a clustering distance measure we have used the MoJo distance measure, as proposed in reference \cite{mojo}. 
+The MoJo distance measure which counts the minimum number of operations to transform one clustering to another.  
 Since Louvain Community Detection produces  different (but very similar) results every time it runs, we ran the simulations 
 multiple times and averaged the results. 
+The experimentation with a large and complex system may constitute a threat to our findings' validity since the results are not general.  
+
 
 \section{Results, Evaluation \& Discussion}
 
 In Table \ref{tab:evaluation}, we present the results of the clusterings ordered in increasing MoJo distance 
-with respect to the Ground Truth. 
+with respect to the ground truth. 
 We have included the number of clusters produced, the cluster size range, the average cluster size the standard
 deviation in the cluster sizes, the median cluster and the MoJo distances with respect to the ground truth. 
-The Ground Truth clustering is also present in the table. 
+The ground truth clustering is also present in the table. 
 Our quality metrics for the clusterings are 
 \emph{extremity}, \emph{authoritativeness} and \emph{stability} as proposed in reference \cite{evaluation}.
 
 Firstly, our approach produces balanced clusterings thus demonstrating low \emph{extremity} compared to the other clusterings, 
-producing a number of clusters that was close to the Ground Truth with smaller standard deviation in the cluster sizes than 
+producing a number of clusters that is close to the ground truth with smaller standard deviation in the cluster sizes than 
 the other clustering methods, without knowing the number of clusters \emph{a priori}. 
 Besides this, our approach also gives balanced clusters with respect to \emph{Median Cluster} criterion. 
-Note that ACDC, which takes into account only the structural properties of the files, produced a high 
-granularity clustering that failed to catch the structure of Linux Codebase. 
-Moreover, in the \emph{authoritativeness} criterion, our approach outperforms the other clusterings to a very up to 10 times 
-in terms of MoJo distance being very close (smaller is better) to the Ground Truth, with a very small standard deviation. 
-This also suggests great \emph{stability} in the resulting clusterings. 
-Note that the other clustering methods we compared against ours gave disappointing MoJo distances even with their cluster
-number defined equal to the one of the Ground Truth. 
+Note that \textsc{acdc}, which takes into account only the structural properties of the files, produced a high 
+granularity clustering that failed to catch the structure of Linux. 
+In the \emph{authoritativeness} criterion, our approach outperforms the other clusterings
+in terms of MoJo distance being very close (smaller is better) to the ground truth, with small standard deviation, posing great \emph{stability} in the resulting clusterings. 
+Note that the other clustering methods gave disappointing MoJo distances even with a fixed number of clusters. 
 
 \section{Related Work}
 
 Onaiza Maqbool and Haroon A. Babri \cite{maqbool_overview} present an
-overview of the various approaches taken towards to hierarchical clustering algorithms
-for software systems. In their study, they compare the various clustering algorithms
-such as ACDC, LIMBO and other Traditional Clustering Algorithms such as Single
+overview of the various approaches taken towards hierarchical clustering algorithms
+for software systems. In their study, they compare many clustering algorithms
+such as \textsc{acdc}, \textsc{limbo} and other Traditional Clustering Algorithms such as Single
 Linkage, Complete Linkage and Weighted Linkage presenting their efficiency regarding 
 multiple feature sets. 
 Added to this, a \emph{semantics-based architectural view} of the system, as discussed in reference
 \cite{large_study} reveals significant aspects of a software system and its change over 
-time, which suggests that semantic-based approached should be followed for gaining better 
-understandings of a software system. Their suggestion in \cite{large_study} is a \emph{term frequency--inverse 
-document frequency} (TF-IDF) model serving as a similarity measure between source code 
-entities. 
-Work in Software Clustering Algorithms (SCA) has been extensively done by Tzerpos in
-references \cite{mojo}, \cite{stability}, \cite{acdc} and \cite{limbo} with the ACDC
-and LIMBO clustering algorithms. 
+time, which suggests that semantic-based approaches should be followed for gaining better 
+understandings of a software system. 
 
-In particular, the ACDC algorithm leans toward to software components comprehension 
+%Their suggestion in \cite{large_study} is a \emph{term frequency--inverse 
+% document frequency} (TF-IDF) model serving as a similarity measure between source code 
+% entities. 
+Work in Software Clustering Algorithms (\textsc{sca}) has been extensively done by many authors in
+references \cite{mojo}, \cite{stability}, \cite{acdc} and \cite{limbo} with the \textsc{acdc}
+and \textsc{limbo} clustering algorithms. 
+In particular, the \textsc{acdc} algorithm leans toward to software components comprehension 
 based on subsystem patterns. Their approach considers an initial structure of the system, 
 without taking into account semantics, and tries to build comprehensive clusterings of the given ground structure. 
 The authors also conducted a study on an older version of  Linux. 
 Moreover, Andritsos and Tzerpos in reference \cite{limbo} present an Information-Theoretic 
-approach of SCA by developing LIMBO which clusters modules upon inserting their Distributional Cluster Features 
+approach of \textsc{sca} by developing \textsc{limbo} which clusters modules upon inserting their Distributional Cluster Features 
 to a B+-tree variant and then applying the \emph{Agglomerative Information Bottleneck} algorithm, merging the 
 clusters with the minimum mutual information loss together. 
 
@@ -288,10 +285,12 @@ and information from the call graph in order to produce meaningful clusterings o
 We conclude that we have outperformed state-of-the-art software clusterings and conventional
 agglomerative clustering algorithms 
 in terms of \emph{extremity}, \emph{authoritativeness} and \emph{stability} 
-without even knowing the number of clusters of the Ground Truth. This evidence strongly
+without even knowing the number of clusters of the ground truth. This evidence 
 supports the further usage of vector semantics and the call graph for architecture recovery.
-Finally, further work is encouraged in several areas such as 
-integration with more static analyzers and use of the project in order to recover layered architectures.
+Finally, as future work we mention the use of this project 
+with more static analyzers, as well as its use to recover layers in layered
+architectural schemata.
+
 
 
 \newpage
