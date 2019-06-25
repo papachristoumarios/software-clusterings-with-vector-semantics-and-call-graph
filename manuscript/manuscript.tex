@@ -1,5 +1,5 @@
 %%%% Proceedings format for most of ACM conferences (with the exceptions listed below) and all ICPS volumes.
-\documentclass[sigconf,review, anonymous]{acmart}
+\documentclass[sigconf]{acmart}
 \usepackage{float}
 %%%% As of March 2017, [siggraph] is no longer used. Please use sigconf (above) for SIGGRAPH conferences.
 
@@ -65,6 +65,13 @@ the Call Graph}
 \author{Marios Papachristou}
 
 \email{papachristoumarios@gmail.com}
+\additionalaffiliation{%
+  \institution{Business Analytics Lab at Athens University of Economics and Business}
+  \streetaddress{Patision Campus}
+  \city{Athens}
+  \state{Attica}
+  \postcode{104 34}
+}
 \affiliation{%
   \institution{National Technical University of Athens}
   \streetaddress{Zografou Campus}
@@ -77,18 +84,12 @@ the Call Graph}
 
 \begin{abstract}
 
-\noindent \textbf{Purpose -- } Propose a novel method to determine a software's modules without 
-knowledge of its architectural structure, and empirically validate the method's performance.
-
-\noindent \textbf{Method -- } Cluster files by combining document embeddings, generated with the  \emph{Doc2Vec} algorithm, and the \emph{call graph}, provided by Static Graph Analyzers to an augmented graph.
-Use of the \emph{Louvain Algorithm} to determine its community structure and propose a module--level clustering. 
-
-
-\noindent \textbf{Results --} Our method performs better in terms of stability, authoritativeness 
+In this paper, we propose a novel method to determine a software's modules without 
+knowledge of its architectural structure, and empirically validate the method's performance. We cluster files by combining document embeddings, generated with the  \emph{Doc2Vec} algorithm, and the \emph{call graph}, provided by Static Graph Analyzers to an augmented graph. Use of the \emph{Louvain Algorithm} to determine its community structure and propose a module--level clustering. 
+Our method performs better in terms of stability, authoritativeness 
 and extremity over other state-of-the-art clustering methods proposed in literature and is able to decently 
 recover the ground truth clustering of the Linux Kernel. 
-
-\noindent \textbf{Conclusions and Contributions --} Semantic information from vector semantics as well as the call graph can produce 
+Finally, we conclude that semantic information from vector semantics as well as the call graph can produce 
 accurate results for software clusterings of large systems.
 
 \end{abstract}
