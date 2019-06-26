@@ -1,56 +1,27 @@
-%%%% Proceedings format for most of ACM conferences (with the exceptions listed below) and all ICPS volumes.
-\documentclass[sigconf]{acmart}
+\documentclass[sigconf, screen]{acmart}
 \usepackage{float}
-%%%% As of March 2017, [siggraph] is no longer used. Please use sigconf (above) for SIGGRAPH conferences.
 
-%%%% Proceedings format for SIGPLAN conferences 
-% \documentclass[sigplan, anonymous, review]{acmart}
-
-%%%% Proceedings format for SIGCHI conferences
-% \documentclass[sigchi, review]{acmart}
-
-%%%% To use the SIGCHI extended abstract template, please visit
-% https://www.overleaf.com/read/zzzfqvkmrfzn
-
-%
-% defining the \BibTeX command - from Oren Patashnik's original BibTeX documentation.
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08emT\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
     
-% Rights management information. 
-% This information is sent to you when you complete the rights form.
-% These commands have SAMPLE values in them; it is your responsibility as an author to replace
-% the commands and values with those provided to you when you complete the rights form.
-%
-% These commands are for a PROCEEDINGS abstract or paper.
-\copyrightyear{2019}
+%%% If you see 'ACMUNKNOWN' in the 'setcopyright' statement below,
+%%% please first submit your publishing-rights agreement with ACM (follow link on submission page).
+%%% Then please update our instructions page and copy-and-paste the NEW commands into your article.
+%%% Please contact us in case of questions; allow up to 10 min for the system to propagate the information.
+%%%
+%%% The following is specific to ESEC/FSE '19-SRC and the paper
+%%% 'Software Clusterings with Vector Semantics and the Call Graph'
+%%% by Marios Papachristou.
+%%%
+\setcopyright{rightsretained}
+\acmPrice{15.00}
+\acmDOI{10.1145/3338906.3342483}
 \acmYear{2019}
-\setcopyright{acmlicensed}
-
-\acmConference[ESEC/FSE 2019]{The 27th ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering}{26--30 August, 2019}{Tallinn, Estonia}
-
-%
-% These commands are for a JOURNAL article.
-%\setcopyright{acmcopyright}
-%\acmJournal{TOG}
-%\acmYear{2018}\acmVolume{37}\acmNumber{4}\acmArticle{111}\acmMonth{8}
-%\acmDOI{10.1145/1122445.1122456}
-
-%
-% Submission ID. 
-% Use this when submitting an article to a sponsored event. You'll receive a unique submission ID from the organizers
-% of the event, and this ID should be used as the parameter to this command.
-%\acmSubmissionID{123-A56-BU3}
-
-%
-% The majority of ACM publications use numbered citations and references. If you are preparing content for an event
-% sponsored by ACM SIGGRAPH, you must use the "author year" style of citations and references. Uncommenting
-% the next command will enable that style.
-%\citestyle{acmauthoryear}
+\copyrightyear{2019}
+\acmISBN{978-1-4503-5572-8/19/08}
+\acmConference[ESEC/FSE '19]{Proceedings of the 27th ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering}{August 26--30, 2019}{Tallinn, Estonia}
+\acmBooktitle{Proceedings of the 27th ACM Joint European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE '19), August 26--30, 2019, Tallinn, Estonia}
 
 
-
-%
-% end of the preamble, start of the body of the document source.
 \begin{document}
 
 %
@@ -65,13 +36,13 @@ the Call Graph}
 \author{Marios Papachristou}
 
 \email{papachristoumarios@gmail.com}
-\additionalaffiliation{%
-  \institution{Business Analytics Lab at Athens University of Economics and Business}
-  \streetaddress{Patision Campus}
-  \city{Athens}
-  \state{Attica}
-  \postcode{104 34}
-}
+%\additionalaffiliation{%
+%  \institution{Business Analytics Lab at Athens University of Economics and Business}
+%  \streetaddress{Patision Campus}
+%  \city{Athens}
+%  \state{Attica}
+%  \postcode{104 34}
+%}
 \affiliation{%
   \institution{National Technical University of Athens}
   \streetaddress{Zografou Campus}
@@ -84,10 +55,9 @@ the Call Graph}
 
 \begin{abstract}
 
-In this paper, we propose a novel method to determine a software's modules without 
-knowledge of its architectural structure, and empirically validate the method's performance. We cluster files by combining document embeddings, generated with the  \emph{Doc2Vec} algorithm, and the \emph{call graph}, provided by Static Graph Analyzers to an augmented graph. Use of the \emph{Louvain Algorithm} to determine its community structure and propose a module--level clustering. 
+In this paper, we propose a novel method to determine a software's modules without knowledge of its architectural structure, and empirically validate the method's performance. We cluster files by combining document embeddings, generated with the  \emph{Doc2Vec} algorithm, and the \emph{call graph}, provided by Static Graph Analyzers to an augmented graph. Use of the \emph{Louvain Algorithm} to determine its community structure and propose a module--level clustering. 
 Our method performs better in terms of stability, authoritativeness 
-and extremity over other state-of-the-art clustering methods proposed in literature and is able to decently 
+, and extremity over other state-of-the-art clustering methods proposed in the literature and is able to decently 
 recover the ground truth clustering of the Linux Kernel. 
 Finally, we conclude that semantic information from vector semantics as well as the call graph can produce 
 accurate results for software clusterings of large systems.
@@ -142,7 +112,7 @@ In modern software systems, the need for adoption of modular software architectu
 becomes inevitable for robust maintainability of their codebases.
 Since the architecture of a software system is the most fundamental realization of the 
 software system, when there is no description of the architecture of it, software 
-architects make attempts to recover it. In the past, methods have been proposed 
+architects make attempts to recover it. In the past, methods have been proposed to 
 identify the main components of a software system using hierarchical clustering 
 algorithms \cite{maqbool_overview, limbo} mainly by clustering modules into subsystems, given 
 using the source code.    
@@ -151,7 +121,7 @@ can also be applied on codebases as corpora of text, thus enabling
 the extraction of useful information for the semantics of the source code 
 inaugurating new modes of reviewing the codebase. 
 
-Our motivation, through this paper, is to use new features, vector semantics and structural information via the call graph in order to perform community detection and arrive at module-level clusterings. 
+Our motivation, through this paper, is to use new features, vector semantics, and structural information via the call graph in order to perform community detection and arrive at module-level clusterings. 
 We will study the Linux codebase and we will compare it with ground truth  using the MoJo measure \cite{mojo} as well as 
 compare it with other state-of-the-art and baseline clustering algorithms  in terms of \emph{stability}, \emph{authoritativeness} and \emph{extremity}
 \cite{maqbool_overview, evaluation}.
@@ -166,8 +136,7 @@ Linkage, Complete Linkage and Weighted Linkage presenting their efficiency regar
 multiple feature sets. 
 Added to this, a \emph{semantics-based architectural view} of the system, as discussed in reference
 \cite{large_study} reveals significant aspects of a software system and its change over 
-time, which suggests that semantic-based approaches should be followed for gaining better 
-understandings of a software system. 
+time, which suggests that semantic-based approaches should be followed for gaining better understandings of a software system. 
 
 Work in Software Clustering Algorithms (\textsc{sca}) has been extensively done by many authors in
 references \cite{mojo}, \cite{stability}, \cite{acdc} and \cite{limbo} with the \textsc{acdc}
@@ -207,7 +176,7 @@ to a B+-tree variant and then applying the \emph{Agglomerative Information Bottl
   \end{tabular}
 \end{table*}
 
-\paragraph{Method Overview} The codebase is initially preprocessed and the resulting data is fed into a Skip-Gram model for the initial components, which correspond to nodes in the call graph. Next, we add weights between the nodes with the normalized similarity between them. Finally, we run the Louvain algorithm to obtain a software clustering. 
+\paragraph{Method Overview} The codebase is initially preprocessed and the resulting data is fed into a Skip-Gram model for the initial components, which correspond to nodes in the call graph. Next, we add weights between the nodes with the normalized similarity between them. Finally, we run the Louvain algorithm to obtain a software clustering. The overall process is described below.
 
 First of all, we tokenize the code and remove the stop-words. 
 After that, for each token, we split it into its constituent parts using dynamic programming \cite{wordninja} and lemmatize 
@@ -218,7 +187,7 @@ We, then, train a Doc2Vec model using Gensim \cite{gensim}.
 The codebase is also processed by a Static Graph Analyzer. 
 In our approach, focusing on C projects, we use \emph{CScout} \cite{cscout} in order to generate the directed call graph through function calls between the files. 
 Each source code file is assigned to a module. 
-Modules can be user defined or automatically generated by their respective directories at a desired directory tree depth. 
+Modules can be user-defined or automatically generated by their respective directories at a desired directory tree depth. 
 The input to the clustering procedure
 is the call graph with cosine similarities of the modules as edge weights.
 Then we run the Louvain Clustering Algorithm \cite{louvain} in
@@ -229,8 +198,7 @@ merge the results with a disjoint-set data structure as stated in reference \cit
 Our method is implemented in the Python Language using spaCy\cite{spacy}, Gensim \cite{gensim} and NetworkX \cite{nx} and is named \textsc{sade}. The source code and data are available in \cite{source_code} and \cite{call_graph}. 
 
 \paragraph{Decision Rationale for Evaluation System} 
-We have chosen to use Linux as a codebase to evaluate our method on 
-since it is a large and complex system with 27 years of continuous development and spanning 20.3 millions source lines of code (\textsc{sloc}) at the time of writing.  
+We have chosen to use Linux as a codebase to evaluate our method on since it is a large and complex system with 27 years of continuous development and spanning 20.3 millions source lines of code (\textsc{sloc}) at the time of writing.  
 Moreover, it is easy to find ground truth system due to its clear directory structure and construct test-cases for
 evaluations. 
 Finally, it was also used in related studies \cite{acdc, evaluation} as a reference system for evaluation.  
@@ -239,12 +207,12 @@ Finally, it was also used in related studies \cite{acdc, evaluation} as a refere
 consisting of 20.3 million \textsc{sloc} against Average-Linkage \cite{average}, Complete-Linkage \cite{complete} 
 and Ward-Linkage \cite{ward} using the same document embeddings
 as well as \textsc{acdc} with structural information \cite{acdc} and \textsc{limbo} \cite{limbo} with Bag-of-Words features. The results are presented in Table \ref{tab:evaluation} and user-defined parameters are formatted in italics. 
-As ground truth, we have used the first level directories as a target clustering and as input we have considered 
+As ground truth, we have used the first level directories as a target clustering and as input, we have considered 
 the modules of the one-top directories. 
 For example, the source code file \texttt{drivers/net/ieee802154\-/mcr20a.c} has a ground truth value of \texttt{drivers} 
 and it is considered under the same module as every \texttt{.c} and \texttt{.h} file under \texttt{drivers/net/ieee802154}. 
 The MoJo distance measure which counts the minimum number of operations to transform one clustering to another.  
-Since Louvain Community Detection produces  different (but very similar) results every time it runs, we ran the simulations 
+Since Louvain Community Detection produces different (but very similar) results from every time it runs, we ran the simulations 
 multiple times and averaged the results. 
 The experimentation with a large and complex system may constitute a threat to our findings' validity since the results are not general.  
 
@@ -280,8 +248,7 @@ agglomerative clustering algorithms
 in terms of \emph{extremity}, \emph{authoritativeness} and \emph{stability} 
 without even knowing the number of clusters of the ground truth. This evidence 
 supports the further usage of vector semantics and the call graph for architecture recovery.
-Finally, the further development of evaluation policies with users should be taken into account. 
-
+Finally, the further integration with static analyzers and the development of evaluation policies with users should be taken into account, especially when dealing with old codebases lacking technical documentation.
 
 \newpage
 \bibliographystyle{ACM-Reference-Format}
@@ -290,3 +257,4 @@ Finally, the further development of evaluation policies with users should be tak
 
 
 \end{document}
+
