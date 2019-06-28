@@ -3,15 +3,6 @@
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08emT\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
     
-%%% If you see 'ACMUNKNOWN' in the 'setcopyright' statement below,
-%%% please first submit your publishing-rights agreement with ACM (follow link on submission page).
-%%% Then please update our instructions page and copy-and-paste the NEW commands into your article.
-%%% Please contact us in case of questions; allow up to 10 min for the system to propagate the information.
-%%%
-%%% The following is specific to ESEC/FSE '19-SRC and the paper
-%%% 'Software Clusterings with Vector Semantics and the Call Graph'
-%%% by Marios Papachristou.
-%%%
 \setcopyright{rightsretained}
 \acmPrice{15.00}
 \acmDOI{10.1145/3338906.3342483}
@@ -36,26 +27,28 @@ the Call Graph}
 \author{Marios Papachristou}
 
 \email{papachristoumarios@gmail.com}
-%\additionalaffiliation{%
-%  \institution{Business Analytics Lab at Athens University of Economics and Business}
-%  \streetaddress{Patision Campus}
-%  \city{Athens}
-%  \state{Attica}
-%  \postcode{104 34}
-%}
+\additionalaffiliation{%
+  \institution{Business Analytics Lab at Athens University of Economics and Business}
+  \streetaddress{Patision Campus}
+  \city{Athens}
+  \state{Attica}
+  \postcode{104 34}
+}
 \affiliation{%
   \institution{National Technical University of Athens}
   \streetaddress{Zografou Campus}
   \city{Athens}
   \state{Attica}
+  \country{Greece}
   \postcode{157 73}
 }
+\titlenote{The research described has been carried out as part of the CROSSMINER Project, which has received funding from the European Union's Horizon 2020 Research and Innovation Programme under grant agreement No. 732223}
 
 \renewcommand{\shortauthors}{Papachristou}
 
 \begin{abstract}
 
-In this paper, we propose a novel method to determine a software's modules without knowledge of its architectural structure, and empirically validate the method's performance. We cluster files by combining document embeddings, generated with the  \emph{Doc2Vec} algorithm, and the \emph{call graph}, provided by Static Graph Analyzers to an augmented graph. Use of the \emph{Louvain Algorithm} to determine its community structure and propose a module--level clustering. 
+In this paper, we propose a novel method to determine a software's modules without knowledge of its architectural structure, and empirically validate the method's performance. We cluster files by combining document embeddings, generated with the  \emph{Doc2Vec} algorithm, and the \emph{call graph}, provided by Static Graph Analyzers to an augmented graph. We use the \emph{Louvain Algorithm} to determine its community structure and propose a module--level clustering. 
 Our method performs better in terms of stability, authoritativeness 
 , and extremity over other state-of-the-art clustering methods proposed in the literature and is able to decently 
 recover the ground truth clustering of the Linux Kernel. 
@@ -121,7 +114,7 @@ can also be applied on codebases as corpora of text, thus enabling
 the extraction of useful information for the semantics of the source code 
 inaugurating new modes of reviewing the codebase. 
 
-Our motivation, through this paper, is to use new features, vector semantics, and structural information via the call graph in order to perform community detection and arrive at module-level clusterings. 
+Our motivation, through this paper, is to use new features, namely vector semantics, and structural information via the call graph in order to perform community detection and arrive at module-level clusterings. 
 We will study the Linux codebase and we will compare it with ground truth  using the MoJo measure \cite{mojo} as well as 
 compare it with other state-of-the-art and baseline clustering algorithms  in terms of \emph{stability}, \emph{authoritativeness} and \emph{extremity}
 \cite{maqbool_overview, evaluation}.
@@ -176,7 +169,7 @@ to a B+-tree variant and then applying the \emph{Agglomerative Information Bottl
   \end{tabular}
 \end{table*}
 
-\paragraph{Method Overview} The codebase is initially preprocessed and the resulting data is fed into a Skip-Gram model for the initial components, which correspond to nodes in the call graph. Next, we add weights between the nodes with the normalized similarity between them. Finally, we run the Louvain algorithm to obtain a software clustering. The overall process is described below.
+The codebase is initially preprocessed and the resulting data is fed into a Skip-Gram model for the initial components, which correspond to nodes in the call graph. Next, we add weights between the nodes with the normalized similarity between them. Finally, we run the Louvain algorithm to obtain a software clustering. The overall process is described below.
 
 First of all, we tokenize the code and remove the stop-words. 
 After that, for each token, we split it into its constituent parts using dynamic programming \cite{wordninja} and lemmatize 
@@ -194,25 +187,23 @@ Then we run the Louvain Clustering Algorithm \cite{louvain} in
 order to obtain the software clustering via maximizing the modularity function with a greedy approach. 
 In case we want to consider edge directionality, we do a bipartite transformation, detect communities and
 merge the results with a disjoint-set data structure as stated in reference \cite{malliaros}.
-    
+
 Our method is implemented in the Python Language using spaCy\cite{spacy}, Gensim \cite{gensim} and NetworkX \cite{nx} and is named \textsc{sade}. The source code and data are available in \cite{source_code} and \cite{call_graph}. 
 
-\paragraph{Decision Rationale for Evaluation System} 
+
 We have chosen to use Linux as a codebase to evaluate our method on since it is a large and complex system with 27 years of continuous development and spanning 20.3 millions source lines of code (\textsc{sloc}) at the time of writing.  
-Moreover, it is easy to find ground truth system due to its clear directory structure and construct test-cases for
+Moreover, its ground truth is is easy to due to the clear directory structure and construct test-cases for
 evaluations. 
 Finally, it was also used in related studies \cite{acdc, evaluation} as a reference system for evaluation.  
 
-\paragraph{Experimental Setting} Our method was tested on Linux 4.21,
+ Our method was tested on Linux 4.21,
 consisting of 20.3 million \textsc{sloc} against Average-Linkage \cite{average}, Complete-Linkage \cite{complete} 
 and Ward-Linkage \cite{ward} using the same document embeddings
 as well as \textsc{acdc} with structural information \cite{acdc} and \textsc{limbo} \cite{limbo} with Bag-of-Words features. The results are presented in Table \ref{tab:evaluation} and user-defined parameters are formatted in italics. 
 As ground truth, we have used the first level directories as a target clustering and as input, we have considered 
 the modules of the one-top directories. 
 For example, the source code file \texttt{drivers/net/ieee802154\-/mcr20a.c} has a ground truth value of \texttt{drivers} 
-and it is considered under the same module as every \texttt{.c} and \texttt{.h} file under \texttt{drivers/net/ieee802154}. 
-The MoJo distance measure which counts the minimum number of operations to transform one clustering to another.  
-Since Louvain Community Detection produces different (but very similar) results from every time it runs, we ran the simulations 
+and it is considered under the same module as every \texttt{.c} and \texttt{.h} file under \texttt{drivers/net/ieee802154}. Since Louvain Community Detection produces different (but very similar) results from every time it runs, we ran the simulations 
 multiple times and averaged the results. 
 The experimentation with a large and complex system may constitute a threat to our findings' validity since the results are not general.  
 
@@ -227,15 +218,15 @@ The ground truth clustering is also present in the table.
 Our quality metrics for the clusterings are 
 \emph{extremity}, \emph{authoritativeness} and \emph{stability} as proposed in reference \cite{evaluation}.
 
-Firstly, our approach produces balanced clusterings thus demonstrating low \emph{extremity} compared to the other clusterings, 
+Our approach produces balanced clusterings thus demonstrating low \emph{extremity} compared to the other clusterings, 
 producing a number of clusters that is close to the ground truth with smaller standard deviation in the cluster sizes than 
 the other clustering methods, without knowing the number of clusters \emph{a priori}. 
-Besides this, our approach also gives balanced clusters with respect to \emph{Median Cluster} criterion. 
+Besides this, it gives balanced clusters with respect to \emph{Median Cluster} criterion. 
 Note that \textsc{acdc}, which takes into account only the structural properties of the files, produced a high 
 granularity clustering that failed to catch the structure of Linux. 
 In the \emph{authoritativeness} criterion, our approach outperforms the other clusterings
 in terms of MoJo distance being very close (smaller is better) to the ground truth, with small standard deviation, posing great \emph{stability} in the resulting clusterings. 
-Note that the other clustering methods gave disappointing MoJo distances even with a fixed number of clusters. 
+Closing, the other clustering methods gave disappointing MoJo distances even with a fixed number of clusters. 
 
 
 
