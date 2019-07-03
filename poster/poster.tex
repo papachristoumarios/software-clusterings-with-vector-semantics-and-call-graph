@@ -1,0 +1,289 @@
+% Gemini theme
+% https://github.com/anishathalye/gemini
+
+\documentclass[final]{beamer}
+
+% ====================
+% Packages
+% ====================
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[size=custom,width=120,height=72,scale=1.0]{beamerposter}
+\usetheme{gemini}
+\usecolortheme{gemini}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+ \usepackage{ragged2e}
+\usepackage{pgfplots}
+\addtobeamertemplate{block begin}{}{\justifying}  %new code
+
+
+% ====================
+% Lengths
+% ====================
+
+% If you have N columns, choose \sepwidth and \colwidth such that
+% (N+1)*\sepwidth + N*\colwidth = \paperwidth
+\newlength{\sepwidth}
+\newlength{\colwidth}
+\setlength{\sepwidth}{0.025\paperwidth}
+\setlength{\colwidth}{0.3\paperwidth}
+
+\newcommand{\separatorcolumn}{\begin{column}{\sepwidth}\end{column}}
+
+% ====================
+% Title
+% ====================
+\title{Software Clusterings with Vector Semantics and the Call Graph}
+\author[Marios Papachristou]{Marios Papachristou}
+
+\institute[BaLab]{BALab, Athens University of Economics and Bussiness \\ National Technical University of Athens \\ Advisor: Prof. Diomidis Spinellis}
+\date[ESEC/FSE 2019 SRC]{Student Research Competition \\ ESEC/FSE August 2019 \\ Estonia}
+ 
+
+% ====================
+% Body
+% ====================
+
+\begin{document}
+
+\begin{frame}[t]
+\begin{columns}[t]
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+  \begin{alertblock}{ABSTRACT}
+  
+  	\textbf{Purpose --}  Propose a method to determine a software’s modules
+without knowledge of its structure, and empirically validate the
+method’s performance.
+
+	\textbf{Method --} Cluster files by combining \textbf{document embeddings}, generated with the \textbf{Doc2Vec} algorithm, and the \textbf{call graphs}, provided
+by Static Graph Analyzers to an \textbf{augmented graph}. Use of the Louvain Algorithm to iteratively exhibit its community structure and propose a module–level clustering.
+
+	\textbf{Results --} Our method performs better in terms of stability, 			authoritativeness and extremity over other state-of-the-art clustering
+methods proposed in literature and is able to decently recover the
+ground truth clustering of the Linux Kernel.
+	
+	\textbf{Conclusions --} Semantic information from vector semantics and
+the call graph can produce accurate results for software clusterings
+of large systems.
+  \end{alertblock}
+
+
+  \begin{block}{Problem Statement}
+	
+	\begin{itemize}
+    \item The architecture of a software system is the most fundamental realization of it
+    \item When there is no specific definition of it, we can attempt to recover it
+    \item One particular problem is the \textbf{clustering of its components into modules} 
+    \item Many methods exist in literature such as agglomerative clustering baselines as well as more sophisticated algorithms, like LIMBO and ACDC. 
+\end{itemize}
+
+
+
+  \end{block}
+
+  
+  
+  
+  
+  \begin{alertblock}{Purpose}
+
+    
+\begin{enumerate}
+    \item \textbf{Provide} a method for software clusterings through \textbf{vector semantics} and the \textbf{call graph} to determine software's modules without knowledge of its structure
+    \item Empirically validate our method performance on the \textbf{Linux Kernel Codebase}
+
+    \item Compare it against state-of-the-art methods (ACDC \cite{acdc}, LIMBO \cite{LIMBO}) and agglomerative clustering methods (agglomerative clustering \cite{average, complete, ward}) 
+\end{enumerate}
+    
+  \end{alertblock}
+
+\begin{block}{Related Work} 
+
+\begin{itemize}
+\justifying
+
+\item Onaiza Maqbool and Haroon A. Babri \cite{maqbool_overview} present an
+overview of the various approaches taken towards hierarchical clustering algorithms
+for software systems. In their study, they compare many clustering algorithms
+such as \textbf{ACDC}, \textbf{LIMBO} and other Traditional Clustering Algorithms such as Single
+Linkage, Complete Linkage and Weighted Linkage presenting their efficiency regarding 
+multiple feature sets. 
+
+\item A \textbf{semantics-based architectural view} of the system, as discussed in reference
+\cite{large_study} reveals significant aspects of a software system and its change over 
+time, which suggests that semantic-based approaches should be followed for gaining better understandings of a software system. 
+
+\item The \textbf{ACDC} algorithm leans toward to software components comprehension 
+based on subsystem patterns. Their approach considers an initial structure of the system, 
+without taking into account semantics, and tries to build comprehensive clusterings of the given ground structure. 
+
+\item Andritsos and Tzerpos in reference \cite{LIMBO} present an Information-Theoretic 
+approach of \textbf{sca} by developing \textbf{LIMBO} which clusters modules upon inserting their Distributional Cluster Features 
+to a B+-tree variant and then applying the \textbf{Agglomerative Information Bottleneck} algorithm.
+\end{itemize}
+
+\end{block}
+
+
+
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+\begin{alertblock}{Our Method}
+
+\heading{Preprocessing of the codebase \& Training a Doc2Vec Model}
+First of all, we tokenize the source code and remove the stop-words. 
+After that, for each token, we split it into its constituent parts using dynamic programming \cite{wordninja} and lemmatize 
+each individual sub-token via using the \textbf{NLP} package spaCy \cite{spacy}. 
+For example, the method \texttt{\_\_zone\_seqlock\_init} corresponds to \texttt{zone}, \texttt{seqlock} and \texttt{init}, 
+\texttt{inprogress} is split into \texttt{in} and \texttt{progress} and \texttt{literals} becomes \texttt{literal}.
+We, then, train a Doc2Vec model using Gensim \cite{gensim}. 
+
+\heading{Extracting the Call Graph(s)} 
+
+\begin{enumerate}
+\item The codebase is also processed by a Static Graph Analyzer. 
+In our approach, focusing on C projects, we use \textbf{CScout} \cite{cscout} in order to generate the directed call graph through function calls between the files. 
+Each source code file is assigned to a module. 
+Modules can be user-defined or automatically generated by their respective directories at a desired directory tree depth. 
+
+\item The edges have the normalized cosine similarities as weights $w(i,j) = (1 + \cos(\vec x_i, \vec x_j)) / 2$
+\end{enumerate}
+
+
+
+
+\heading{Obtaining a clustering}
+Then we run the Louvain Clustering Algorithm \cite{louvain} in
+order to obtain the software clustering via maximizing the modularity function with a greedy approach. 
+The Louvain Method is a greedy optimization method that maximizes the modularity function of a graph $H(V, E)$
+
+$$Q(H) = \frac {1}{2m} \sum_{(i, j) \in E(H)} \left ( w(i, j) - \frac {k(i) k(j)} {2m} \right )$$
+    
+where $m = \sum_{(i, j) \in E} w(i,j)$ and $k(i) = \sum_{j \in \mathrm{in}(i)} w(i, j)$ . In case we want to consider edge directionality, we do a bipartite transformation, detect communities and
+merge the results with a union-find data structure as stated in reference \cite{malliaros}.
+
+\heading{Decision Rationale for Evaluation System}
+
+
+We have chosen to use Linux as a codebase to evaluate our method on since 
+
+\begin{enumerate}
+
+\item it is a large and complex system with 27 years of continuous development 
+\item it spans $\sim$20.3 million lines of source code at the time of writing
+\item  it is easy to establish a ground truth due to its clear structure and construct test-cases for evaluations. 
+
+\item it is used in related studies \cite{acdc, evaluation} as a reference system for evaluation
+
+\end{enumerate}
+
+\heading{Ground Truth}
+As ground truth, we have used the first level directories as a target clustering and as input, we have considered 
+the modules of the one-top directories. 
+For example, the source code file \texttt{drivers/net/ieee802154\-/mcr20a.c} has a ground truth value of \texttt{drivers} 
+and it is considered under the same module as every \texttt{.c} and \texttt{.h} file under \texttt{drivers/net/ieee802154}. 
+
+\heading{Experimental Evaluation} 
+
+\begin{itemize}
+
+\item Compare our method against agglomerative clustering baselines (average, complete, and Ward linkage) and state-of-the-art methods (LIMBO and ACDC)
+\item Use the MoJo distance metric to calculate the distance between the proposed clustering and ground truth
+\item Evaluate clusterings \textbf{stability}, \textbf{authoritativeness} and \textbf{extremity}
+
+\end{itemize}
+
+\end{alertblock}
+
+	
+	
+	
+	
+
+\end{column}
+
+\separatorcolumn
+
+\begin{column}{\colwidth}
+
+	
+
+  \begin{block}{Results}
+
+    
+
+    \begin{table}
+      \centering
+      \small
+\begin{tabular}{lrrrrrrr}
+    \toprule
+    \textbf{Algorithm} & \textbf{Feat. Dim}  & $n_c$ & \textbf{Range} & $\bar x$ & $\sigma$ & \textbf{Median} & \textbf{MoJo D.} \\
+    \midrule
+    \textbf{ACDC}  & -- & 9055 & 1 -- 4245 & 5 & 46 & 2 & 33694\\
+    Average Linkage  & \textbf{300} & \textbf{21} & 1--3406 & 163 & 725 & 1 & 2092 \\
+    Complete Linkage  & \textbf{300} & \textbf{21} & 1--1529 & 163 & 412 & 19 & 1710 \\
+    \textbf{LIMBO}  ($B=100, \; S = \infty$) & 12317 &\textbf{21} & 50--1810 & 163 & 375 & 50  & 1482 \\
+
+    Ward Linkage & \textbf{300} & \textbf{21} & 21--948 & 163 & 223 & 70 & 1138 \\
+        
+    \textbf{SADE} & \textbf{300} & 10 ($\pm$ 2)  & 2 ($\pm$ 0) -132 ($\pm$ 13) & 64 ($\pm$ 4) & 40 ($\pm$ 4) & 65 ($\pm$ 10) & 243 ($\pm$ 1)  \\
+    \textbf{SADE} (Directed) & \textbf{300} & 5 ($\pm$ 2) & 1 ($\pm$ 1) - 614 ($\pm$ 1) & 141 ($\pm$ 39) & 253 ($\pm$ 25) & 2 ($\pm$ 0.3)  & 237 ($\pm$ 2) \\
+    \midrule
+    Ground Truth & -- & 21 & 1--1348 & 163 & 341 & 11.0 & -- \\
+    \bottomrule
+  \end{tabular}
+
+      \caption{Experimental Results for Linux Kernel 4.21 Codebase. User-defined parameters are in italics.}
+    \end{table}
+
+
+	\begin{itemize}
+		\justifying
+    \item \textbf{Surpass} all clustering algorithms in terms of MoJo Distance Metric
+    \item Production of \textbf{balanced clusterings}
+    \item Production of \textbf{stable clusterings}
+    \item Results were produced without knowing the number of clusters of the ground truth a priori
+    \item Provide a \textbf{simplistic approach} to software clustering combining vector semantics and the call graph
+	\end{itemize}
+	
+
+
+  \end{block}
+
+	\begin{alertblock}{Conclusions}
+	\begin{enumerate}
+	\justifying
+    \item Use of vector semantics and the call graph to produce meaningful clusterings
+    \item Performing our study on a very large system (Linux) gives us further insight on the nature of software itself
+    \item Outperform state-of-the-art and baseline methods in terms of authoritativeness and extremity
+    \item Produce stable and balanced clusterings 
+\end{enumerate}
+
+	
+		
+	\end{alertblock}
+
+
+  \begin{block}{References}
+	
+    \scriptsize{\bibliographystyle{plain}\bibliography{references}}
+
+  \end{block}
+
+\end{column}
+
+\separatorcolumn
+\end{columns}
+\end{frame}
+
+\end{document}
