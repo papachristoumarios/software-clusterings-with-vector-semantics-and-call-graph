@@ -13,7 +13,6 @@
 \date[ESEC/FSE 2019 SRC]{Student Research Competition \\ ESEC/FSE August 2019 \\ Estonia}
  
  
- 
 \begin{document}
  
 \frame{\titlepage}
@@ -66,22 +65,21 @@ We took a simple approach to the problem
 \begin{frame}{Preprocessing}
 
 \begin{enumerate}
-    \item First the code is tokenized and identifiers are split into their constituent parts using dynamic programming and n-grams. Stop-words are removed. 
+    \item<1-> First the code is tokenized and identifiers are split into their constituent parts using dynamic programming and n-grams. Stop-words are removed. 
     
-    \item For example \texttt{zone\_seqlock\_init} becomes \texttt{zone}, \texttt{seqlock}, \texttt{init} and \texttt{inprogress} becomes \texttt{in} and \texttt{progress}
+    \item<2-> For example \texttt{zone\_seqlock\_init} becomes \texttt{zone}, \texttt{seqlock}, \texttt{init} and \texttt{inprogress} becomes \texttt{in} and \texttt{progress}
     
-    \item Let $L(m)$ be the cost of the optimal split in the $m$-th character of the identifier. Then 
+    %\item Let $L(m)$ be the cost of the optimal split in the $m$-th character of the identifier. Then 
 
-    $$\small L(m) = 
-    \begin{cases}
-	0 & m = 0 \\
-	\min_{n \le \ell \le m - n} \{ L(\ell) + c(\ell, \ell + n) \} & \text{else} 
+    %$$\small L(m) = 
+    %\begin{cases}
+	%0 & m = 0 \\
+	%\min_{n \le \ell \le m - n} \{ L(\ell) + c(\ell, \ell + n) \} & \text{else} 
 	
+%\end{cases}
+%$$
 
-\end{cases}
-$$
-
-	\item The resulting tokens are lemmatized using the English Lemmatizer provided by the spaCy \cite{spacy} package
+	\item<3-> The resulting tokens are lemmatized using the English Lemmatizer provided by the spaCy \cite{spacy} package
 
 \end{enumerate}
 
@@ -97,7 +95,7 @@ $$\frac {1} {N} \sum_{t = k}^{N - k} \log \Pr [w_t \mid w_{t-k}, \dots, w_{t + k
 
 where 
 
-$$\Pr [w_c \mid w_t] = \frac {\exp(s(w_c, w_t))} {\sum_{j = 1}^{V} \exp(s(w_t, j)}$$
+$$\Pr [w_c \mid w_t] = \frac {\exp(s(w_c, w_t))} {\sum_{j = 1}^{V} \exp(s(w_t, j))}$$
 
 We have used Doc2Vec for our training which extends the aforementioned idea to extract document embeddings.
     
@@ -151,11 +149,11 @@ The extraction of the call graphs took $\sim 10$h and required $\sim 32$GB of RA
 \begin{frame}{Preparing the graph for clustering}
 
 \begin{itemize}
-    \item The weights assigned to every edge are the normalized cosine similarities
+    \item<1-> The weights assigned to every edge are the normalized cosine similarities
     $$\cos(\vec x_i, \vec x_j) = \frac {\langle \vec x_i, \vec x_j \rangle} {\| \vec x_i \| \| \vec x_j \|}$$
     $$w(i, j) = \frac {1 + \cos(\vec x_i, \vec x_j)} {2} \qquad \forall (i, j) \in E(H)$$
     
-    \item Experiments were run using both the directed and the undirected version of the graph. The directed version of the graph required doing a bipartite transformation \cite{malliaros} where every edge $(i, j)$ was mapped to $\{ i, j' \}$ where $j'$ was a copy of $j \in V$. After community detection, the communities which $j$ and $j'$ belonged to were merged using a union-find data structure.  
+    \item<2-> Experiments were run using both the directed and the undirected version of the graph. The directed version of the graph required doing a bipartite transformation \cite{malliaros} where every edge $(i, j)$ was mapped to $\{ i, j' \}$ where $j'$ was a copy of $j \in V$. After community detection, the communities which $j$ and $j'$ belonged to were merged using a union-find data structure.  
     
 \end{itemize}
 
@@ -164,17 +162,17 @@ The extraction of the call graphs took $\sim 10$h and required $\sim 32$GB of RA
 \begin{frame}[allowframebreaks]{Louvain Community Detection}
 
 \begin{itemize}
-    \item The Louvain method for community detection aims to produce communities which maximize the modularity function 
+    \item<1-> The Louvain method for community detection aims to produce communities which maximize the modularity function 
     
     $$Q(H) = \frac {1}{2m} \sum_{(i, j) \in E(H)} \left ( w(i, j) - \frac {k(i) k(j)} {2m} \right )$$
     
     where $m = \sum_{(i, j) \in E} w(i,j)$ and $k(i) = \sum_{j \in \mathrm{in}(i)} w(i, j)$ . 
     
-    \item \textsc{modularity-optimization} is NP-Hard \cite{modularity}.
-    \item The Louvain algorithm progresses agglomeratively by checking for each node $i$ where the largest change in $\Delta Q (i, j) $ occurs for each $j$ of its neighboring communities. 
+    \item<2-> \textsc{modularity-optimization} is NP-Hard \cite{modularity}.
+    \item<3-> The Louvain algorithm progresses agglomeratively by checking for each node $i$ where the largest change in $\Delta Q (i, j) $ occurs for each $j$ of its neighboring communities. 
     \framebreak
     
-    \item The change $\Delta Q(i, j)$ in modularity is derived as 
+    \item<4-> The change $\Delta Q(i, j)$ in modularity is derived as 
         
     \small {
     $$ \Delta Q = \bigg[ \frac{\Sigma_{in} + 2k_{in} (i)}{2m} - \bigg(\frac{\Sigma_{tot} + k(i)}{2m}\bigg)^2 \bigg]-\bigg[\frac{\Sigma_{in}}{2m} - \bigg(\frac{\Sigma_{tot}}{2m}\bigg)^2-\bigg(\frac{k(i)}{2m}\bigg)^2\bigg] $$
@@ -183,7 +181,7 @@ The extraction of the call graphs took $\sim 10$h and required $\sim 32$GB of RA
     
     where $\Sigma_{in}$ is sum of all the weights of the links inside the community $i$ is moving into, $\Sigma_{tot}$ is the sum of all the weights of the links to nodes in the community $i$ is moving into, $k_{in} (i)$ is the sum of the weights of the links between $i$ and other nodes in the community that $i$ is  moving into.
     
-    \item The communities that Louvain Clustering produces 
+    \item<5-> The communities that Louvain Clustering produces 
     
 \end{itemize}
 
@@ -193,12 +191,16 @@ The extraction of the call graphs took $\sim 10$h and required $\sim 32$GB of RA
 
 The MoJo \cite{mojo} metric is a clustering distance metric used for comparing software clusterings. The MoJo distance between two clusterings $\mathcal C_1, \mathcal C_2$ is defined as the minimum number of moves and joins to transform one clustering to another where 
 \begin{itemize}
-    \item \textbf{Move:} Moving a resource from one cluster to another (that includes moving a resource into a previously nonexistent cluster or creating a new cluster.
-    \item \textbf{Join:} Join two clusters into one.
-\end{itemize}
+    \item<1-> \textbf{Move:} Moving a resource from one cluster to another (that includes moving a resource into a previously nonexistent cluster or creating a new cluster.
+    \item<2-> \textbf{Join:} Join two clusters into one.
+	\item<3-> The MoJo distance is therefore defined as 
 
 $$\textrm{MoJo} (\mathcal C_1, \mathcal C_2) = \min \{ \textrm{mno} (\mathcal C_1, \mathcal C_2), \textrm{mno}(\mathcal C_2, \mathcal C_1) \}$$
-    Exact computation is not \textbf{efficient} so a \textbf{heuristic} is proposed.
+    \item<4-> Exact computation is not \textbf{efficient} so a \t-extbf{heuristic} is proposed.
+
+
+\end{itemize}
+
 \end{frame}
 
 
@@ -230,7 +232,7 @@ $$\textrm{MoJo} (\mathcal C_1, \mathcal C_2) = \min \{ \textrm{mno} (\mathcal C_
 Linkage functions vary
 
 \begin{itemize}
-    \item Average Linkage $\mathrm{argmax}_{A, B} \frac {w(A, B)}{|A||B|}$
+    \item Average Linkage\footnote{$w(A, B) = \sum_{a \in A, b \in B} w(a,b)$}  $\mathrm{argmax}_{A, B} \frac {w(A, B)}{|A||B|}$
     \item Complete Linkage $\mathrm{argmax}_{a \in A, b \in B} w(a, b)$
     \item Single Linkage $\mathrm{argmin}_{a \in A, b \in B} w(a, b)$
     \item Ward Linkage 
@@ -298,14 +300,14 @@ The two main algorithms appearing in literature \cite{maqbool_overview, large_st
     
 \end{frame}
  
-\begin{frame}{Discussion}
+\begin{frame}{Results \& Discussion}
 
 \begin{itemize}
-    \item Surpass all clustering algorithms in terms of MoJo Distance Metric
-    \item Production of balanced clusterings 
-    \item Production of stable clusterings 
-    \item Results were produced without knowing the number of clusters of the ground truth a priori
-    \item Provide a simplistic approach to software clustering combining vector semantics and the call graph
+    \item<1-> Surpass all clustering algorithms in terms of MoJo Distance Metric
+    \item<2-> Production of balanced clusterings 
+    \item<3-> Production of stable clusterings 
+    \item<4-> Results were produced without knowing the number of clusters of the ground truth a priori
+    \item<5-> Provide a simplistic approach to software clustering combining vector semantics and the call graph
 \end{itemize}
     
 \end{frame}
@@ -313,10 +315,10 @@ The two main algorithms appearing in literature \cite{maqbool_overview, large_st
 \begin{frame}{Conclusions}
 
 \begin{enumerate}
-    \item Use vector semantics and the call graph to produce meaningful clusterings
-    \item Performing our study on a very large system (Linux) gives us further insight on the nature of software itself
-    \item Outperform state-of-the-art and baseline methods in terms of authoritativeness and extremity
-    \item Produce stable and balanced clusterings 
+    \item<1-> Use \textbf{vector semantics} and the \textbf{call graph} to produce meaningful clusterings
+    \item<2-> Performing our study on a very large system (Linux) gives us further insight on the nature of software itself
+    \item<3-> Outperform state-of-the-art and baseline methods in terms of \textbf{authoritativeness} and \textbf{extremity}
+    \item<4-> Produce \textbf{stable} and \textbf{balanced} clusterings 
 \end{enumerate}
     
 \end{frame}
@@ -324,8 +326,9 @@ The two main algorithms appearing in literature \cite{maqbool_overview, large_st
 \begin{frame}{Future Work}
 
 \begin{itemize}
-    \item Test our system with various codebases
-    \item 
+    \item Testing our system with various codebases to validate method's generalizability
+    \item Development of evaluation policies with users should be taken into account, especially when dealing with old codebases lacking technical documentation.
+    \item Integration with more static analyzers 
 \end{itemize}
     
 \end{frame}

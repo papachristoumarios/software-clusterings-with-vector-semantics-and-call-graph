@@ -1,0 +1,76 @@
+\begin{thebibliography}{10}
+
+\bibitem{limbo}
+Periklis Andritsos and Vassilios Tzerpos.
+\newblock Information-theoretic software clustering.
+\newblock {\em IEEE Transactions on Software Engineering}, (2):150--165, 2005.
+
+\bibitem{large_study}
+Pooyan Behnamghader, Duc~Minh Le, Joshua Garcia, Daniel Link, Arman Shahbazian,
+  and Nenad Medvidovic.
+\newblock A large-scale study of architectural evolution in open-source
+  software systems.
+\newblock {\em Empirical Software Engineering}, 22(3):1146--1193, 2017.
+
+\bibitem{modularity}
+Ulrik Brandes, Daniel Delling, Marco Gaertler, Robert G{\"o}rke, Martin Hoefer,
+  Zoran Nikoloski, and Dorothea Wagner.
+\newblock Maximizing modularity is hard.
+\newblock {\em arXiv preprint physics/0608255}, 2006.
+
+\bibitem{complete}
+Daniel Defays.
+\newblock An efficient algorithm for a complete link method.
+\newblock {\em The Computer Journal}, 20(4):364--366, 1977.
+
+\bibitem{spacy}
+Matthew Honnibal and Ines Montani.
+\newblock spacy 2: Natural language understanding with bloom embeddings,
+  convolutional neural networks and incremental parsing.
+\newblock {\em Convolutional Neural Networks and Incremental Parsing}, 2017.
+
+\bibitem{doc2vec}
+Quoc Le and Tomas Mikolov.
+\newblock Distributed representations of sentences and documents.
+\newblock In {\em International Conference on Machine Learning}, pages
+  1188--1196, 2014.
+
+\bibitem{malliaros}
+Fragkiskos~D Malliaros and Michalis Vazirgiannis.
+\newblock Clustering and community detection in directed networks: A survey.
+\newblock {\em Physics Reports}, 533(4):95--142, 2013.
+
+\bibitem{maqbool_overview}
+Onaiza Maqbool and Haroon Babri.
+\newblock Hierarchical clustering for software architecture recovery.
+\newblock {\em IEEE Transactions on Software Engineering}, 33(11), 2007.
+
+\bibitem{average}
+Robert~R Sokal.
+\newblock A statistical method for evaluating systematic relationship.
+\newblock {\em University of Kansas science bulletin}, 28:1409--1438, 1958.
+
+\bibitem{cscout}
+Diomidis Spinellis.
+\newblock Cscout: A refactoring browser for c.
+\newblock {\em Science of Computer Programming}, 75(4):216, 2010.
+
+\bibitem{mojo}
+Vassilios Tzerpos and Richard~C Holt.
+\newblock Mojo: A distance metric for software clusterings.
+\newblock In {\em Reverse Engineering, 1999. Proceedings. Sixth Working
+  Conference on}, pages 187--193. IEEE, 1999.
+
+\bibitem{acdc}
+Vassilios Tzerpos and Richard~C Holt.
+\newblock Acdc: an algorithm for comprehension-driven clustering.
+\newblock In {\em Reverse Engineering, 2000. Proceedings. Seventh Working
+  Conference on}, pages 258--267. IEEE, 2000.
+
+\bibitem{ward}
+Joe~H Ward~Jr.
+\newblock Hierarchical grouping to optimize an objective function.
+\newblock {\em Journal of the American statistical association},
+  58(301):236--244, 1963.
+
+\end{thebibliography}

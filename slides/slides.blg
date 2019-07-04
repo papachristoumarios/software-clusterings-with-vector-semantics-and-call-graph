@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2015/Debian)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: slides.aux
+The style file: plain.bst
+Database file #1: references.bib
+Warning--there's a number but no volume in limbo
+You've used 13 entries,
+            2118 wiz_defined-function locations,
+            581 strings with 5999 characters,
+and the built_in function-call counts, 4617 in all, are:
+= -- 472
+> -- 190
+< -- 3
++ -- 78
+- -- 62
+* -- 318
+:= -- 752
+add.period$ -- 41
+call.type$ -- 13
+change.case$ -- 70
+chr.to.int$ -- 0
+cite$ -- 14
+duplicate$ -- 178
+empty$ -- 366
+format.name$ -- 62
+if$ -- 973
+int.to.chr$ -- 0
+int.to.str$ -- 13
+missing$ -- 13
+newline$ -- 68
+num.names$ -- 26
+pop$ -- 64
+preamble$ -- 1
+purify$ -- 57
+quote$ -- 0
+skip$ -- 134
+stack$ -- 0
+substring$ -- 340
+swap$ -- 45
+text.length$ -- 3
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 52
+warning$ -- 1
+while$ -- 48
+width$ -- 15
+write$ -- 145
+(There was 1 warning)
