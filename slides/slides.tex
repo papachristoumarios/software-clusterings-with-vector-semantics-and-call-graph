@@ -6,13 +6,14 @@
  \usepackage{ragged2e}
 \justifying
 %Information to be included in the title page:
-\title{Software Clusterings with Vector Semantics and the Call Graph}
+\title[SADE]{Software Clusterings with Vector Semantics and the Call Graph}
 \author[Marios Papachristou]{Marios Papachristou \\ \small \url{papachristoumarios@gmail.com} \\ \small \url{el15101@mail.ntua.gr}}
 
 \institute[BaLab]{BALab, Athens University of Economics and Bussiness \\ National Technical University of Athens \\ Advisor: Prof. Diomidis Spinellis}
 \date[ESEC/FSE 2019 SRC]{Student Research Competition \\ ESEC/FSE August 2019 \\ Estonia}
  
  
+\usepackage{graphicx}
 \begin{document}
  
 \frame{\titlepage}
@@ -196,7 +197,7 @@ The MoJo \cite{mojo} metric is a clustering distance metric used for comparing s
 	\item<3-> The MoJo distance is therefore defined as 
 
 $$\textrm{MoJo} (\mathcal C_1, \mathcal C_2) = \min \{ \textrm{mno} (\mathcal C_1, \mathcal C_2), \textrm{mno}(\mathcal C_2, \mathcal C_1) \}$$
-    \item<4-> Exact computation is not \textbf{efficient} so a \t-extbf{heuristic} is proposed.
+    \item<4-> Exact computation is not \textbf{efficient} so a \textbf{heuristic} is proposed.
 
 
 \end{itemize}
@@ -249,9 +250,8 @@ The affinity function $w$ can be any distance measure. In our comparison, we hav
 The two main algorithms appearing in literature \cite{maqbool_overview, large_study} are 
 
 \begin{itemize}
-    \item LIMBO. An Information-Theoretic Clustering Algorithm based on the Agglomerative Information Bottleneck. The initial clusters are put on a B+-tree variant (DCF Tree) and then the leaves of the tree become the input of the Agglomerative Information Bottleneck Algorithm. 
-
-    \item ACDC. TODO
+	\item LIMBO
+	\item ACDC
     
 \end{itemize}
 
@@ -326,11 +326,27 @@ The two main algorithms appearing in literature \cite{maqbool_overview, large_st
 \begin{frame}{Future Work}
 
 \begin{itemize}
-    \item Testing our system with various codebases to validate method's generalizability
+    %\item Testing our system with various codebases to validate method's generalizability
     \item Development of evaluation policies with users should be taken into account, especially when dealing with old codebases lacking technical documentation.
     \item Integration with more static analyzers 
 \end{itemize}
     
+\end{frame}
+
+\begin{frame}
+\frametitle{Code and Data} 
+
+\begin{figure}
+\centering
+\includegraphics[height=0.4\paperheight]{source_and_paper_qr.png} \qquad
+\includegraphics[height=0.4\paperheight]{dataset_qr.png}
+\end{figure}
+
+\centering \Large {
+  \emph{Thank you!}}
+  \url{https://github.com/papachristoumarios/sade}
+  \url{https://zenodo.org/record/2652487}
+
 \end{frame}
 
 
@@ -341,11 +357,6 @@ The two main algorithms appearing in literature \cite{maqbool_overview, large_st
 \end{frame}
  
 
-\begin{frame}{}
-  \centering \Large {
-  \emph{Thank you!}}
-  \texttt{https://github.com/papachristoumarios/sade}
-\end{frame}
  
  
 \end{document}
