@@ -9,8 +9,8 @@
 \title[SADE]{Software Clusterings with Vector Semantics and the Call Graph}
 \author[Marios Papachristou]{Marios Papachristou \\ \small \url{papachristoumarios@gmail.com} \\ \small \url{el15101@mail.ntua.gr}}
 
-\institute[BaLab]{BALab, Athens University of Economics and Bussiness \\ National Technical University of Athens \\ Advisor: Prof. Diomidis Spinellis}
-\date[ESEC/FSE 2019 SRC]{Student Research Competition \\ ESEC/FSE August 2019 \\ Estonia}
+\institute[BaLab/NTUA]{BALab, Athens University of Economics and Bussiness \\ National Technical University of Athens \\ Advisor: Prof. Diomidis Spinellis}
+\date[ESEC/FSE 2019 SRC]{Student Research Competition \\ ESEC/FSE 2019, Tallin \\ ACAC 2019, Athens}
  
  
 \usepackage{graphicx}
@@ -96,7 +96,7 @@ $$\frac {1} {N} \sum_{t = k}^{N - k} \log \Pr [w_t \mid w_{t-k}, \dots, w_{t + k
 
 where 
 
-$$\Pr [w_c \mid w_t] = \frac {\exp(s(w_c, w_t))} {\sum_{j = 1}^{V} \exp(s(w_t, j))}$$
+$$\Pr [w_c \mid w_t] = \frac {\exp(s(w_c, w_t))} {\sum_{j = 1}^{V} \exp(s(w_t, j))} \qquad s(w_c, w_t) = \langle \vec d_c, \vec d_t \rangle$$
 
 We have used Doc2Vec for our training which extends the aforementioned idea to extract document embeddings.
     
@@ -181,8 +181,12 @@ The extraction of the call graphs took $\sim 10$h and required $\sim 32$GB of RA
         
     
     where $\Sigma_{in}$ is sum of all the weights of the links inside the community $i$ is moving into, $\Sigma_{tot}$ is the sum of all the weights of the links to nodes in the community $i$ is moving into, $k_{in} (i)$ is the sum of the weights of the links between $i$ and other nodes in the community that $i$ is  moving into.
-    
-    \item<5-> The communities that Louvain Clustering produces 
+	\item<5-> This measure determines \textbf{how much the modularity changes via moving (joining) community $i$ with community $j$}. At each round, these values are calculated for the community $i$ and its neighboring communities and $i$ is merged with $j^* \in \mathrm{argmax}_{j \in N(i)} \{ \Delta Q(i, j) \}$
+	
+	
+ 
+	
+	\item<6-> Runs in time $O(n \log n)$
     
 \end{itemize}
 
@@ -190,7 +194,7 @@ The extraction of the call graphs took $\sim 10$h and required $\sim 32$GB of RA
 
 \begin{frame}{The MoJo Clustering Distance}
 
-The MoJo \cite{mojo} metric is a clustering distance metric used for comparing software clusterings. The MoJo distance between two clusterings $\mathcal C_1, \mathcal C_2$ is defined as the minimum number of moves and joins to transform one clustering to another where 
+The MoJo \cite{mojo} metric is a clustering distance metric used for comparing software clusterings. The MoJo distance between two clusterings $\mathcal C_1, \mathcal C_2$ is defined as the \textbf{minimum number of moves and joins} to transform one clustering to another where 
 \begin{itemize}
     \item<1-> \textbf{Move:} Moving a resource from one cluster to another (that includes moving a resource into a previously nonexistent cluster or creating a new cluster.
     \item<2-> \textbf{Join:} Join two clusters into one.
@@ -236,7 +240,7 @@ Linkage functions vary
     \item Average Linkage\footnote{$w(A, B) = \sum_{a \in A, b \in B} w(a,b)$}  $\mathrm{argmax}_{A, B} \frac {w(A, B)}{|A||B|}$
     \item Complete Linkage $\mathrm{argmax}_{a \in A, b \in B} w(a, b)$
     \item Single Linkage $\mathrm{argmin}_{a \in A, b \in B} w(a, b)$
-    \item Ward Linkage 
+    \item Ward Linkage. Ward minimizes $J(C) = \sum_{\vec x, \vec y \in C} \| \vec x - \vec y \|^2$ for each cluster $C \in \mathcal C$. 
     \item Information Loss (Agglomerative Information Bottleneck Algorithm)
 \end{itemize}
 
@@ -250,8 +254,11 @@ The affinity function $w$ can be any distance measure. In our comparison, we hav
 The two main algorithms appearing in literature \cite{maqbool_overview, large_study} are 
 
 \begin{itemize}
-	\item LIMBO
-	\item ACDC
+	\item LIMBO: Clusters modules upon inserting their Distributional Cluster
+Features to a B+-tree variant and then applying the Agglomerative
+Information Bottleneck algorithm.\footnote{aka Agglomerative Clustering with Mutual Information Loss as Measure} 
+	\item ACDC: Leans toward to software components comprehension
+based on subsystem patterns.
     
 \end{itemize}
 
@@ -273,28 +280,51 @@ The two main algorithms appearing in literature \cite{maqbool_overview, large_st
 \end{frame}
 
 
-\begin{frame}{Results}
-    
+\begin{frame}[allowframebreaks]
+    \frametitle{Results}
+    \tiny
     \begin{table}
-    \Tiny
+    
     \begin{tabular}{lrrrrrrr}
     \hline
-    Alg. & Dim.  & $n_c$ & Range & $\bar x$ & $\sigma$ & Median & Dist. \\
+    Method & Dim.  & $n_c$ & Range & $\bar x$ & $\sigma$ & Median  \\
     \hline
-    \textsc{acdc}  & -- & 9055 & 1 -- 4245 & 5 & 46 & 2 & 33694\\
-    Average Linkage  & \emph{300} & \emph{21} & 1--3406 & 163 & 725 & 1 & 2092 \\
-    Complete Linkage  & \emph{300} & \emph{21} & 1--1529 & 163 & 412 & 19 & 1710 \\
-    \textsc{limbo}  \footnote{($B=100, \; S = \infty$)} & 12317 &\emph{21} & 50--1810 & 163 & 375 & 50  & 1482 \\
+    \textsc{acdc}  & -- & 9055 & 1 -- 4245 & 5 & 46 & 2 \\
+    Average Linkage  & \emph{300} & \emph{21} & 1--3406 & 163 & 725 & 1 \\
+    Complete Linkage  & \emph{300} & \emph{21} & 1--1529 & 163 & 412 & 19 \\
+    \textsc{limbo}   & 12317 &\emph{21} & 50--1810 & 163 & 375 & 50 \\
 
-    Ward Linkage\footnote{Eucledian Affinity} & \emph{300} & \emph{21} & 21--948 & 163 & 223 & 70 & 1138 \\
+    Ward Linkage & \emph{300} & \emph{21} & 21--948 & 163 & 223 & 70 \\
         
-    \textsc{sade} & \emph{300} & 10 ($\pm$ 2)  & 2 ($\pm$ 0) -132 ($\pm$ 13) & 64 ($\pm$ 4) & 40 ($\pm$ 4) & 65 ($\pm$ 10) & 243 ($\pm$ 1)  \\
-    \textsc{sade} (Directed) & \emph{300} & 5 ($\pm$ 2) & 1 ($\pm$ 1) - 614 ($\pm$ 1) & 141 ($\pm$ 39) & 253 ($\pm$ 25) & 2 ($\pm$ 0.3)  & 237 ($\pm$ 2) \\
+    \textsc{sade} & \emph{300} & 10 ($\pm$ 2)  & 2 ($\pm$ 0) -132 ($\pm$ 13) & 64 ($\pm$ 4) & 40 ($\pm$ 4) & 65 ($\pm$ 10)   \\
+    \textsc{sade} (Directed) & \emph{300} & 5 ($\pm$ 2) & 1 ($\pm$ 1) - 614 ($\pm$ 1) & 141 ($\pm$ 39) & 253 ($\pm$ 25) & 2 ($\pm$ 0.3)   \\
     \hline
-    Ground Truth & -- & 21 & 1--1348 & 163 & 341 & 11.0 & -- \\
+    Ground Truth & -- & 21 & 1--1348 & 163 & 341 & 11.0 \\
     \hline
   \end{tabular}
-    \caption{Experimental Results for Linux 4.21. Italics denote manually defined parameters}
+   \caption{Experimental Results for Linux 4.21. Italics denote manually defined parameters}
+
+\end{table}
+   
+  \begin{table}
+  \framebreak
+  \small
+  \begin{tabular}{lr}
+    \hline
+    Method &   MoJo Distance \\
+    \hline
+    \textsc{acdc}  &  33694\\
+    Average Linkage  & 2092 \\
+    Complete Linkage  &  1710 \\
+    \textsc{limbo}  \footnote{($B=100, \; S = \infty$) and Bag-of-Words Features} &  1482 \\
+
+    Ward Linkage\footnote{Eucledian Affinity} &  1138 \\
+        
+    \textsc{sade} &  243 ($\pm$ 1)  \\
+    \textsc{sade} (Directed) &  237 ($\pm$ 2) \\ \hline  
+    
+    \end{tabular}
+    \caption{MoJo Distances}
 
 \end{table}
     
@@ -326,9 +356,10 @@ The two main algorithms appearing in literature \cite{maqbool_overview, large_st
 \begin{frame}{Future Work}
 
 \begin{itemize}
-    %\item Testing our system with various codebases to validate method's generalizability
-    \item Development of evaluation policies with users should be taken into account, especially when dealing with old codebases lacking technical documentation.
+    \item Testing our system with various codebases (e.g. gcc, Postgres etc.)
+    %\item Development of evaluation policies with users should be taken into account, especially when dealing with old codebases lacking technical documentation.
     \item Integration with more static analyzers 
+    \item Propose layered software architectures
 \end{itemize}
     
 \end{frame}
