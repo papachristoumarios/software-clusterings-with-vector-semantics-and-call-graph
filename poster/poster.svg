@@ -1010,10 +1010,10 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="1013.3904"
-     inkscape:cy="1866.975"
+     inkscape:cx="1052.7117"
+     inkscape:cy="1752.6893"
      inkscape:document-units="px"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g6399-5"
      showgrid="false"
      inkscape:window-width="1920"
      inkscape:window-height="1031"
@@ -6014,7 +6014,7 @@
            sodipodi:role="line"
            x="212.10338"
            y="722.0014"
-           id="tspan5067">Our results generates reasonable cluster sizes (not too large and not too small)</tspan><tspan
+           id="tspan5067">Generate reasonable cluster sizes (not too large and not too small)</tspan><tspan
            sodipodi:role="line"
            x="212.10338"
            y="770.36206"
@@ -6023,7 +6023,7 @@
            sodipodi:role="line"
            x="212.10338"
            y="822.0014"
-           id="tspan5073">Our results show great improvement in terms of MoJo clustering distance. Our</tspan><tspan
+           id="tspan5073">Show great improvement in terms of MoJo clustering distance. Our</tspan><tspan
            sodipodi:role="line"
            x="212.10338"
            y="872.0014"
@@ -6069,7 +6069,7 @@
              id="tspan5081-1"
              y="-3287.7388"
              x="1494.6232"
-             sodipodi:role="line">1. Our results suggest further usage of vector semantics in software </tspan><tspan
+             sodipodi:role="line">1. Suggest further usage of vector semantics in software </tspan><tspan
              id="tspan5174"
              y="-3237.7388"
              x="1494.6232"
@@ -6077,7 +6077,7 @@
              id="tspan5178"
              y="-3187.7388"
              x="1494.6232"
-             sodipodi:role="line">2. Our results show significant improvement in terms of closeness to</tspan><tspan
+             sodipodi:role="line">2. Show significant improvement in terms of closeness to</tspan><tspan
              id="tspan5182"
              y="-3137.7388"
              x="1494.6232"
@@ -6085,7 +6085,7 @@
              id="tspan5184"
              y="-3087.7388"
              x="1494.6232"
-             sodipodi:role="line">3. Our method produces balanced clusters</tspan><tspan
+             sodipodi:role="line">3. Production of balanced clusters</tspan><tspan
              id="tspan5186"
              y="-3037.7388"
              x="1494.6232"
@@ -6130,27 +6130,31 @@
     </g>
     <g
        id="g6399-5"
-       transform="translate(3958.5208,1163.3508)">
-      <rect
-         ry="66.670067"
-         y="-2644.7964"
-         x="-1563.7162"
-         height="133.34013"
-         width="573.76666"
-         id="rect6397-22"
-         style="opacity:0.95999995;fill:#00aad4;fill-opacity:1;stroke:none;stroke-width:4.19999981;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
-      <text
-         xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:40px;line-height:125%;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif, Medium';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-         x="-1490.9847"
-         y="-2546.8513"
-         id="text5762-8"
-         sodipodi:linespacing="125%"><tspan
-           sodipodi:role="line"
-           id="tspan5764-6"
-           x="-1490.9847"
+       transform="translate(3796.5208,1163.3508)">
+      <g
+         id="g5182"
+         transform="translate(-32.000001,0)">
+        <rect
+           style="opacity:0.95999995;fill:#00aad4;fill-opacity:1;stroke:none;stroke-width:4.19999981;stroke-linecap:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           id="rect6397-22"
+           width="736.62378"
+           height="133.34013"
+           x="-1526.5734"
+           y="-2644.7964"
+           ry="66.670067" />
+        <text
+           sodipodi:linespacing="125%"
+           id="text5762-8"
            y="-2546.8513"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:90.00000763px;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif Bold';fill:#ffffff">3.SYSTEM</tspan></text>
+           x="-1490.9847"
+           style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:40px;line-height:125%;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif, Medium';text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+           xml:space="preserve"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:90.00000763px;font-family:'CMU Sans Serif';-inkscape-font-specification:'CMU Sans Serif Bold';fill:#ffffff"
+             y="-2546.8513"
+             x="-1490.9847"
+             id="tspan5764-6"
+             sodipodi:role="line">3.EVALUATION</tspan></text>
+      </g>
     </g>
     <g
        id="g8608"
